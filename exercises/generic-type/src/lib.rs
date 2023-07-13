@@ -1,5 +1,11 @@
+use std::mem::swap;
+
 // Exercise 1 
 // Implement struct Point to make it work.
+struct Position<T> {
+    x: T,
+    y: T
+}
 // Make it compile
 fn exercise1() {
     let integer = Position { x: 5, y: 10 };
@@ -11,9 +17,9 @@ fn exercise1() {
 // Exercise 2
 // Modify this struct to make the code work
 // Make it compile
-struct Point<T> {
+struct Point<T, U> {
     x: T,
-    y: T,
+    y: U,
 }
 
 fn exercise2() {
@@ -26,12 +32,12 @@ fn exercise2() {
 // Exercise 3
 // Make it compile
 // Add generic for Val to make the code work, DON'T modify the code in `main`.
-struct Val {
-    val: f64,
+struct Val<T> {
+    val: T,
 }
 
-impl Val {
-    fn value(&self) -> &f64 {
+impl<T> Val<T> {
+    fn value(&self) -> &T {
         &self.val
     }
 }
@@ -49,23 +55,37 @@ fn exercise3() {
 // Implementing logic
 // Run tests
 
-fn find_max<T>(collection: &[T]) -> Option<&T> {
-    todo!()
+fn find_max<T: Ord>(collection: &[T]) -> Option<&T> {
+    collection.iter().max()
 }
 
 // Exercise 5 
 // Reverse the elements in a collection
 // Make it compile 
 // Run tests 
-fn reverse_collection<T>(collection: &[T]) {
-    todo!()
+fn reverse_collection<T>(collection: &mut [T]) {
+    if collection.len() == 0 {
+        return;
+    }
+    let mut left = 0;
+    let mut right = collection.len() - 1;
+    while left < right {
+        collection.swap(left, right);
+        left += 1;
+        right -= 1;
+    }
 }
 
 
 // Exercise 6
 // Function to check if a collection contains a specific value
-fn contains_value<T>(collection: &[T], value: &T) -> bool {
-    todo!()
+fn contains_value<T: PartialEq>(collection: &[T], value: &T) -> bool {
+    for x in collection {
+        if x == value {
+            return true;
+        }
+    }
+    false
 }
 
 // Unit tests
