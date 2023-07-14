@@ -14,14 +14,17 @@ trait Hello {
 struct Student {}
 impl Hello for Student {
     fn say_something(&self) -> String {
-        todo!()
+        String::from("I'm a good student")
     }
 }
 //TODO
 struct Teacher {}
 impl Hello for Teacher {
+    fn say_hi(&self) -> String {
+        String::from("Hi, I'm your new teacher")
+    }
     fn say_something(&self) -> String {
-        todo!()
+        String::from("I'm not a bad teacher")
     }
 }
 
@@ -66,12 +69,12 @@ impl Foo for String {
 
 // IMPLEMENT below with generics and parameters
 fn static_dispatch<T: Foo>(x: T) {
-    todo!()
+    println!("{}", x.method());
 }
 
 // Implement below with trait objects and parameters
-fn dynamic_dispatch<T: Foo>(x: T) {
-    todo!()
+fn dynamic_dispatch(x: &dyn Foo) {
+    println!("{}", x.method());
 }
 
 // Exercise 5
@@ -98,7 +101,7 @@ fn draw_with_box(x: Box<dyn Draw>) {
     x.draw();
 }
 
-fn draw_with_ref(x: __) {
+fn draw_with_ref(x: &dyn Draw) {
     x.draw();
 }
 
@@ -182,7 +185,7 @@ mod tests {
         let y = 8u8;
 
         // Draw x.
-        draw_with_box(__);
+        draw_with_box(Box::new(x));
 
         // Draw y.
         draw_with_ref(&y);
